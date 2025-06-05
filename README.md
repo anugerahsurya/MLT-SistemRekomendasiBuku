@@ -56,22 +56,25 @@ Banyak User yang Memberi Rating :  105283<br>
 Terlihat bahwa dari 278858 user yang teridentifikasi, jumlah user yang memberi rating sebanyak 105283 pengguna. Selain itu jumlah buku yang tersedia sebanyak 271360 Buku. Hal ini menunjukkan bahwa tidak semua pengguna memberikan umpan balik berupa rating terhadap buku yang pernah mereka beli. Dalam memperoleh ringkasan statistik untuk ketiga dataset yang digunakan, dihitung ukuran pemusatan dan ukuran dispersi dari data tersebut.
 
 <figure>
-  <img src="Gambar/RingkasanStatistikBuku.png" alt="Ringkasan Statistik Data Books" style="width:100%">
+  <img src="Gambar/RingkasanStatistikBuku.png" alt="Ringkasan Statistik Data Books" style="width:100%; max-width:600px;">
   <figcaption><b>Gambar 1.</b> Ringkasan Statistik Data Books</figcaption>
 </figure> 
+
 Berdasarkan Gambar 1 terlihat bahwa Buku yang paling banyak muncul berjudul "Selected Poems". Selain itu, penulis yang sering merilis buku yang dipublikasikan adalah "Agatha Cristie" yaitu sebanyak 632 kali tercatat. Secara rata-rata, buku yang tercatat didominasi pada tahun perilisan 2002 yaitu sebanyak 13903 buku. Publisher buku terbanyak adalah "Harlequin".
 <br>
 
 <figure>
-  <img src="Gambar/RingkasanStatistikRating.png" alt="Ringkasan Statistik Data Rating" style="width:100%">
+  <img src="Gambar/RingkasanStatistikRating.png" alt="Ringkasan Statistik Data Rating" style="width:100%; max-width:600px;">
   <figcaption><b>Gambar 2.</b> Ringkasan Statistik Data User</figcaption>
 </figure> 
+
 Berdasarkan Gambar 2 dapat diperoleh bahwa Buku yang paling sering diberi rating adalah buku dengan ISBN "0971880107". Selain itu, secara rata-rata, rating pada dataset itu adalah 2,86. Nilai ini menunjukkan rataan yang rendah karena rentang rating adalah 0 - 10.
 <br>
 <figure>
-  <img src="Gambar/RingkasanStatistikUser.png" alt="Ringkasan Statistik Data User" style="width:100%">
+  <img src="Gambar/RingkasanStatistikUser.png" alt="Ringkasan Statistik Data User" style="width:100%; max-width:600px;">
   <figcaption><b>Gambar 3.</b> Ringkasan Statistik Data Rating</figcaption>
 </figure>
+
 Berdasarkan Gambar 3 diperoleh user yang tercatat didominasi dari user yang berasal dari London, England, United Kingdom yaitu sebanyak 2506 user. Selain itu, rata-rata user yang tercatat berusia 34 Tahun dengan standar deviasi 14. Nilai simpangan tersebut menunjukkan variasi yang cukup tinggi pada data, sehingga menggambarkan usia yang membeli buku cenderung merata namun secara umum didominasi pada usia Remaja hingga Dewasa.<br><br>
 
 Untuk memastikan data yang digunakan sudah dalam kondisi *clean*, dilakukan identifikasi *missing value* pada setiap dataset. Berdasarkan pengecekan tersebut, diperoleh terdapat missing value pada beberapa data. Pada dataset Buku terlihat terdapat missing value pada data yaitu pada kolom Age sebanyak 110762 observasi. Hal ini menunjukkan diperlukan perlakuan agar tidak mengganggu analisis selanjutnya. Pada dataset Buku terlihat terdapat missing value pada data yaitu pada kolom Book-Author sebanyak 2 observasi, Publisher sebanyak 2 observasi, dan Image-URL-L sebanyak 3 observasi. Hal ini juga menunjukkan diperlukan perlakuan agar tidak mengganggu analisis selanjutnya. Pada dataset Rating tidak terdapat missing value.
@@ -160,7 +163,7 @@ Berdasarkan hasil yang diperoleh nantinya akan terbentuk vektor cosine similarit
 Pada pengujian tersebut, diberikan judul 'Life in the Rainforests (Life in the Series)' yang digunakan sebagai input ke fungsi. Terlihat bahwa fungsi mengembalikan 5 buku yang memiliki similarity tertinggi dengan judul sebelumnya. Terlihat pada Gambar 4, Nilai cosine similarity tertinggi yaitu 0,29 pada buku berjudul Life 101 : Everything We Wish We Had Learned A yang ditulis oleh author Peter McWilliams. Kesamaan judul ini dapat menjadi penyebab buku tersebut menjadi hasil kembalian fungsi. Hal ini dikarenakan pengujian kesamaan mempertimbangkan judul, author, dan tahun publikasi. Namun, nilai yang rendah dapat disebabkan karena jumlah token yang sama tidak terlalu banyak terhadap judul.
 
 <figure>
-  <img src="Gambar/Rekomendasi-CBF.png" alt="Hasil Rekomendasi dengan Content-Based Filtering" style="width:100%">
+  <img src="Gambar/Rekomendasi-CBF.png" alt="Hasil Rekomendasi dengan Content-Based Filtering" style="width:100%; max-width:600px;">
   <figcaption><b>Gambar 4.</b> Hasil Rekomendasi dengan Content-Based Filtering</figcaption>
 </figure> 
 
@@ -173,14 +176,14 @@ Model RecommenderNet yang dibangun berbasis Neural Network sehingga terdapat beb
 Pada model yang digunakan, didefinisikan nilai vektor Embedding sebanyak 1024 elemen. Hal ini bertujuan untuk memaksimalkan fitur yang dapat ditangkap oleh model dari karakteristik user pada data. Selain itu model yang digunakan menggunakan optimizer Adam dengan learning rate 0.00001. Dari eksplorasi yang digunakan juga ditetapkan pelatihan akan menggunakan 10 epoch, karena nilai yang lebih besar menunjukkan peningkatan pada loss untuk data validasi sehingga mengindikasikan model overfitting. Penelitian ini juga menggunakan Batch Size sebesar 1024 untuk memaksimumkan performa komputasi sehingga pelatihan lebih cepat dilakukan. Selain itu, penggunaan batch size yang lebih besar juga dapat meminimumkan loss yang dihasilkan oleh model dalam proses pelatihan, dimana loss menggunakan Mean Squared Error dengan metrik evaluasi menggunakan Root Mean Squared Error.
 
 <figure>
-  <img src="Gambar/Kurva Pelatihan RecommenderNet.png" alt="Kurva Pelatihan RecommenderNet" style="width:100%">
+  <img src="Gambar/Kurva Pelatihan RecommenderNet.png" alt="Kurva Pelatihan RecommenderNet" style="width:100%; max-width:600px;">
   <figcaption><b>Gambar 5.</b> Kurva Pelatihan RecommenderNet</figcaption>
 </figure> 
 
 Pada Gambar 5, terlihat kurva pembelajaran model RecommenderNet cenderung overfitting. Hal ini menunjukkan bahwa model yang dibangun butuh optimasi sehingga dapat memperoleh hasil yang lebih baik. Hal ini juga dapat terjadi ketika variabel prediktor memiliki hubungan yang sangat kecil terhadap variabel target. 
 
 <figure>
-  <img src="Gambar/Rekomendasi RecommenderNet.png" alt="Rekomendasi RecommenderNet" style="width:100%">
+  <img src="Gambar/Rekomendasi RecommenderNet.png" alt="Rekomendasi RecommenderNet" style="width:100%; max-width:600px;">
   <figcaption><b>Gambar 6.</b> Hasil Rekomendasi dengan Colaborative Filtering Menggunakan RecommenderNet</figcaption>
 </figure>
 
@@ -192,7 +195,7 @@ Pada pengujian yang dilakukan, diberikan inputan user dengan ID 276727. Berdasar
 Pembentukan model ini digunakan untuk memberikan pendekatan lain berbasis machine learning yaitu Algoritma CatBoost. Pelatihan menggunakan variabel prediktor dan target yang sama dengan RecommenderNet sebelumnya. Dalam mengoptimalkan model CatBoost yang akan dibangun, digunakan library Optuna untuk hyperparameter tuning algoritma tersebut. Hal ini digunakan untuk menemukan kombinasi hyperparameter yang sesuai dengan model.
 
 <figure>
-  <img src="Gambar/Rekomendasi Catboost.png" alt="Rekomendasi Algoritma Catboost" style="width:100%">
+  <img src="Gambar/Rekomendasi Catboost.png" alt="Rekomendasi Algoritma Catboost" style="width:100%; max-width:600px;">
   <figcaption><b>Gambar 7.</b> Hasil Rekomendasi dengan Colaborative Filtering Menggunakan CatBoost</figcaption>
 </figure>
 
