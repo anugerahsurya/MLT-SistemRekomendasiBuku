@@ -1,4 +1,4 @@
-# Laporan Proyek Machine Learning - Nama Anda
+# Laporan Proyek Machine Learning - Anugerah Surya Atmaja
 
 ## Project Overview
 
@@ -48,10 +48,11 @@ Data Users memiliki 278858 observasi yang memiliki rincian kolom sebagai berikut
 - Location : Lokasi dari user.
 - Age : Usia dari User
 
-Dalam memahami kondisi dari data untuk karakteristik yang unik, diperoleh keterangan berikut.
-Banyak User :  278858
-Banyak Buku :  271360
-Banyak User yang Memberi Rating :  105283
+Untuk mempermudah dalam mengakses kolom pada data yang akan dieksplorasi, dilakukan penamaan ulang untuk kolom User-ID agar tidak terkendala dalam mengakses variabel yang mengandung tanda strip. Sehingga data User dan data Rating karena mengandung kolom tersebut, kolomnya diubah namanya menjadi userID. Selanjutnya, dalam memahami kondisi dari data untuk karakteristik yang unik, diperoleh keterangan berikut.
+
+Banyak User :  278858<br>
+Banyak Buku :  271360<br>
+Banyak User yang Memberi Rating :  105283<br>
 Terlihat bahwa dari 278858 user yang teridentifikasi, jumlah user yang memberi rating sebanyak 105283 pengguna. Selain itu jumlah buku yang tersedia sebanyak 271360 Buku. Hal ini menunjukkan bahwa tidak semua pengguna memberikan umpan balik berupa rating terhadap buku yang pernah mereka beli. Dalam memperoleh ringkasan statistik untuk ketiga dataset yang digunakan, dihitung ukuran pemusatan dan ukuran dispersi dari data tersebut.
 
 <figure>
@@ -73,7 +74,7 @@ Berdasarkan Gambar 2 dapat diperoleh bahwa Buku yang paling sering diberi rating
 </figure>
 Berdasarkan Gambar 3 diperoleh user yang tercatat didominasi dari user yang berasal dari London, England, United Kingdom yaitu sebanyak 2506 user. Selain itu, rata-rata user yang tercatat berusia 34 Tahun dengan standar deviasi 14. Nilai simpangan tersebut menunjukkan variasi yang cukup tinggi pada data, sehingga menggambarkan usia yang membeli buku cenderung merata namun secara umum didominasi pada usia Remaja hingga Dewasa.<br><br>
 
-Untuk memastikan data yang digunakan sudah dalam kondisi *clean*, dilakukan identifikasi *missing value* pada setiap dataset. Berdasarkan pengecekan yang dilakukan, secara umum dataset yang digunakan tidak memiliki missing value. 
+Untuk memastikan data yang digunakan sudah dalam kondisi *clean*, dilakukan identifikasi *missing value* pada setiap dataset. Berdasarkan pengecekan tersebut, diperoleh terdapat missing value pada beberapa data. Pada dataset Buku terlihat terdapat missing value pada data yaitu pada kolom Age sebanyak 110762 observasi. Hal ini menunjukkan diperlukan perlakuan agar tidak mengganggu analisis selanjutnya. Pada dataset Buku terlihat terdapat missing value pada data yaitu pada kolom Book-Author sebanyak 2 observasi, Publisher sebanyak 2 observasi, dan Image-URL-L sebanyak 3 observasi. Hal ini juga menunjukkan diperlukan perlakuan agar tidak mengganggu analisis selanjutnya. Pada dataset Rating tidak terdapat missing value.
 
 ## Data Preparation
 Pada tahapan persiapan data terdapat beberapa teknik yang dilakukan. Dalam mempermudah analisis, dilakukan pengintegrasian ketiga dataset melalui proses Join Tabel. Ketiga dataset digabungkan secara bertahap menggunakan primary serta foreign key yang ditetapkan sebelumnya. Berdasarkan proses joining tersebut, diperoleh tabel baru dengan jumlah observasi sebanyak 1149780 observasi. Namun, karena jumlah data pada masing-masing dataset tidak sama, sehingga terdapat missing value pada dataset hasil gabungan.
@@ -95,28 +96,12 @@ Pada tahapan persiapan data terdapat beberapa teknik yang dilakukan. Dalam mempe
 | Image-URL-M           | 118644                |
 | Image-URL-L           | 118648                |
 
-Berdasarkan Tabel 1 terlihat jumlah missing value yang cukup banyak. Dalam mengatasi *missing value* diberikan perlakuan berupa eliminasi observasi. Hal ini dipilih untuk meminimumkan bias hasil observasi karena intervensi dari perlakuan berupa imputasi. 
+Berdasarkan Tabel 1 terlihat jumlah missing value yang cukup banyak. Dalam mengatasi *missing value* diberikan perlakuan berupa eliminasi observasi. Hal ini dipilih untuk meminimumkan bias hasil observasi karena intervensi dari perlakuan berupa imputasi.
 
-Berkaitan dengan Skenario Pembentukan Sistem Rekomendasi dengan *Content Based Filtering* dan *Colaborative Filtering*. Dalam mempersiapkan data yang digunakan untuk pembentukan sistem rekomendasi dengan Content Based Filtering, dipilih atribut seperti Book Title, Book Author, dan Year of Publication sebagai konten yang dipertimbangkan. Ketiga atribut tersebut digabungkan menjadi 1 atribut baru bernama AtributBuku. Kolom AtributBuku dilakukan *preprocessing* berupa case folding dan menghilangkan tanda baca pada teks. Selanjutnya dilakukan undersampling pada dataset karena mempertimbangkan jumlah elemen yang digunakan untuk membentuk matriks cosine similarity (NxN) yang akan membebani komputasi saat nilai N besar. Pada penelitian ini dibatasi sebanyak 80000 observasi untuk pembentukan matriks cosine similarity, sehingga diperoleh matriks berukuran 80000 x 80000 -> sebanyak 6.400.000.000 elemen.
+Berkaitan dengan Skenario Pembentukan Sistem Rekomendasi dengan *Content Based Filtering* dan *Colaborative Filtering*. Dalam mempersiapkan data yang digunakan untuk pembentukan sistem rekomendasi dengan Content Based Filtering, dipilih atribut seperti Book Title, Book Author, dan Year of Publication sebagai konten yang dipertimbangkan. Ketiga atribut tersebut digabungkan menjadi 1 atribut baru bernama AtributBuku. Kolom AtributBuku dilakukan *preprocessing* berupa case folding dan menghilangkan tanda baca pada teks. Selanjutnya dilakukan undersampling pada dataset karena mempertimbangkan jumlah elemen yang digunakan untuk membentuk matriks cosine similarity (NxN) yang akan membebani komputasi saat nilai N besar. Pada penelitian ini dibatasi sebanyak 90000 observasi untuk pembentukan matriks cosine similarity, sehingga diperoleh matriks berukuran 90000 x 90000 -> sebanyak 8.100.000.000 elemen.
 
-Dalam mempersiapkan data untuk pembentukan sistem rekomendasi dengan Collaborative Filtering, tahap *preprocessing* dimulai dengan membentuk Encoder dan Decoder (User -> Indeks -> User; ISBN -> Indeks -> ISBN).
-Tahapan selanjutnya adalah mengacak dataset yang diindeks ulang sebelumnya agar tidak membentuk urutan tertentu. Hal ini digunakan karena tahapan splitting yang ditetapkan memperhatikan urutan data, di mana menggunakan proporsi 80 : 20 untuk data latih dan data uji. Variabel X menggunakan hasil encoding UserID dan ISBN, variabel Y merupakan hasil standardisasi rating pada skala 0 - 1.
+Mengacu pada karakteristik kolom AtributBuku yang dibentuk seharusnya unik pada data, sehingga perlu dilakukan penghapusan duplikasi jika nilai pada kolom tersebut terdapat kesamaan. Hal ini bertujuan agar tidak membentuk isian matriks yang sama pada matriks cosine similarity nantinya. Selain itu, dalam membentuk matriks cosine similarity, diperlukan penghitungan matriks yang akan menjadi pembobot setiap observasi yang akan diukur kesamaannya menggunakan cosine similarity. Pada penelitian ini, pembobot tersebut menggunakan vektor Term Frequency - Inverse Document Frequency. Vektor tersebut merupakan bentuk representasi fitur dari AtributBuku.
 
-Berdasarkan kedua proses preprocessing khusus yang dilakukan maka diperoleh *data clean* berjumlah dua yang akan diujikan terpisah berdasarkan metode yang digunakan.
-
-## Modeling
-
-### Content Based Filtering
-Penelitian ini menggunakan pendekatan Content-Based Filtering (CBF) yang dikombinasikan dengan metode Cosine Similarity untuk memberikan rekomendasi. Content-Based Filtering merupakan salah satu teknik dalam sistem rekomendasi yang menganalisis karakteristik atau fitur dari item yang pernah disukai pengguna sebelumnya, lalu merekomendasikan item dengan fitur serupa. Sistem ini melakukan pencocokan antara profil pengguna dan fitur item untuk menghasilkan rekomendasi yang dipersonalisasi.
-
-Tahapan dalam pembentukan sistem rekomendasi sebagai berikut.
-
-- Ekstraksi fitur dari setiap item.
-- Representasi item dan/atau pengguna dalam bentuk vektor fitur menggunakan TF-IDF
-- Penghitungan kesamaan antara vektor item dan profil pengguna.
-- Rekomendasi diberikan berdasarkan tingkat kemiripan tertinggi.
-
-TF-IDF digunakan sebagai vektor representasi fitur untuk atribut buku. 
 
 1. **TF-IDF:**
 
@@ -143,6 +128,24 @@ Keterangan:
 - $f_{t,d}$ = frekuensi kata $t$ dalam dokumen $d$
 - $N$ = jumlah total dokumen
 
+Dalam mempersiapkan data untuk pembentukan sistem rekomendasi dengan Collaborative Filtering, tahap *preprocessing* dimulai dengan membentuk Encoder dan Decoder (User -> Indeks -> User; ISBN -> Indeks -> ISBN).
+Tahapan selanjutnya adalah mengacak dataset yang diindeks ulang sebelumnya agar tidak membentuk urutan tertentu. Hal ini digunakan karena tahapan splitting yang ditetapkan memperhatikan urutan data, di mana menggunakan proporsi 80 : 20 untuk data latih dan data uji. Variabel X menggunakan hasil encoding UserID dan ISBN, variabel Y merupakan hasil standardisasi rating pada skala 0 - 1.
+
+Berdasarkan kedua proses preprocessing khusus yang dilakukan maka diperoleh *data clean* berjumlah dua yang akan diujikan terpisah berdasarkan metode yang digunakan.
+
+## Modeling
+
+### Content Based Filtering
+Penelitian ini menggunakan pendekatan Content-Based Filtering (CBF) yang dikombinasikan dengan metode Cosine Similarity untuk memberikan rekomendasi. Content-Based Filtering merupakan salah satu teknik dalam sistem rekomendasi yang menganalisis karakteristik atau fitur dari item yang pernah disukai pengguna sebelumnya, lalu merekomendasikan item dengan fitur serupa. Sistem ini melakukan pencocokan antara profil pengguna dan fitur item untuk menghasilkan rekomendasi yang dipersonalisasi.
+
+Tahapan dalam pembentukan sistem rekomendasi sebagai berikut.
+
+- Ekstraksi fitur dari setiap item.
+- Representasi item dan/atau pengguna dalam bentuk vektor fitur menggunakan TF-IDF
+- Penghitungan kesamaan antara vektor item dan profil pengguna.
+- Rekomendasi diberikan berdasarkan tingkat kemiripan tertinggi.
+
+TF-IDF digunakan sebagai vektor representasi fitur untuk atribut buku. 
 
 #### Cosine Similarity
 Cosine Similarity digunakan untuk mengukur kesamaan antar dua vektor. Cosine similarity dihitung antara vektor TF-IDF yang dibentuk sebelumnya.
@@ -165,7 +168,9 @@ Pada pengujian tersebut, diberikan judul 'Life in the Rainforests (Life in the S
 
 #### RecommenderNet
 
-Pembentukan model ini menggunakan algoritma neural network, dimana pada penggunaannya, dibutuhkan input berupa jumlah user, jumlah buku, dan ukuran embedding pada model. Pada pembangunan model juga digunakan optimizer dengan Adam yang menggunakan learning rate 1e-5. Hal ini dipilih karena dapat menunjukkan pelatihan yang lebih stabil. Dengan menggunakan batch size 1024 dan epoch 10, model dievaluasi dengan Root Mean Squared Error.
+Model RecommenderNet yang dibangun berbasis Neural Network sehingga terdapat beberapa layer NN. Pembentukan model melibatkan pendefinisian vektor embedding dari User dan Buku. Selain itu terdapat layer Dropout, Fully Connected Layer, dan Batch Normalization yang didefinisikan pada arsitektur model. Layer terakhir menggunakan fungsi aktivasi Sigmoid yang memiliki output 1 nilai. 
+
+Pada model yang digunakan, didefinisikan nilai vektor Embedding sebanyak 1024 elemen. Hal ini bertujuan untuk memaksimalkan fitur yang dapat ditangkap oleh model dari karakteristik user pada data. Selain itu model yang digunakan menggunakan optimizer Adam dengan learning rate 0.00001. Dari eksplorasi yang digunakan juga ditetapkan pelatihan akan menggunakan 10 epoch, karena nilai yang lebih besar menunjukkan peningkatan pada loss untuk data validasi sehingga mengindikasikan model overfitting. Penelitian ini juga menggunakan Batch Size sebesar 1024 untuk memaksimumkan performa komputasi sehingga pelatihan lebih cepat dilakukan. Selain itu, penggunaan batch size yang lebih besar juga dapat meminimumkan loss yang dihasilkan oleh model dalam proses pelatihan, dimana loss menggunakan Mean Squared Error dengan metrik evaluasi menggunakan Root Mean Squared Error.
 
 <figure>
   <img src="Gambar/Kurva Pelatihan RecommenderNet.png" alt="Kurva Pelatihan RecommenderNet" style="width:100%">
@@ -174,14 +179,24 @@ Pembentukan model ini menggunakan algoritma neural network, dimana pada pengguna
 
 Pada Gambar 5, terlihat kurva pembelajaran model RecommenderNet cenderung overfitting. Hal ini menunjukkan bahwa model yang dibangun butuh optimasi sehingga dapat memperoleh hasil yang lebih baik. Hal ini juga dapat terjadi ketika variabel prediktor memiliki hubungan yang sangat kecil terhadap variabel target. 
 
+<figure>
+  <img src="Gambar/Rekomendasi RecommenderNet.png" alt="Rekomendasi RecommenderNet" style="width:100%">
+  <figcaption><b>Gambar 6.</b> Hasil Rekomendasi dengan Colaborative Filtering Menggunakan RecommenderNet</figcaption>
+</figure>
+
+Pada pengujian yang dilakukan, diberikan inputan user dengan ID 276727. Berdasarkan user tersebut, diberikan rekomendasi buku seperti yang terlihat pada Gambar 6. Hasil keluaran dari fungsi tersebut berkaitan dengan preferensi pengguna yang memiliki karakteristik sama. Sistem merekomendasikan user tersebut untuk membeli buku Femmes Fatal, karena memberikan hasil prediksi rating tertinggi. Kondisi ini menunjukkan bahwa sistem memperkirakan bahwa user tersebut akan memberi rating yang tinggi mengacu pada pola interaksi pengguna lain yang mirip. Sehingga sistem merekomendasikan buku berdasarkan user lain yang karakteristiknya mirip serta menyukai daftar buku tersebut.
+
 
 #### CatBoost
 
 Pembentukan model ini digunakan untuk memberikan pendekatan lain berbasis machine learning yaitu Algoritma CatBoost. Pelatihan menggunakan variabel prediktor dan target yang sama dengan RecommenderNet sebelumnya. Dalam mengoptimalkan model CatBoost yang akan dibangun, digunakan library Optuna untuk hyperparameter tuning algoritma tersebut. Hal ini digunakan untuk menemukan kombinasi hyperparameter yang sesuai dengan model.
 
-**Rubrik/Kriteria Tambahan (Opsional)**: 
-- Menyajikan dua solusi rekomendasi dengan algoritma yang berbeda.
-- Menjelaskan kelebihan dan kekurangan dari solusi/pendekatan yang dipilih.
+<figure>
+  <img src="Gambar/Rekomendasi Catboost.png" alt="Rekomendasi Algoritma Catboost" style="width:100%">
+  <figcaption><b>Gambar 7.</b> Hasil Rekomendasi dengan Colaborative Filtering Menggunakan CatBoost</figcaption>
+</figure>
+
+Pada pengujian yang dilakukan, diberikan inputan user dengan ID 276727. Berdasarkan user tersebut, diberikan rekomendasi buku seperti yang terlihat pada Gambar 7. Hasil keluaran dari fungsi tersebut berkaitan dengan preferensi pengguna yang memiliki karakteristik sama. Sistem merekomendasikan user tersebut untuk membeli buku Verlorene Sellen, Firechild, hingga To Fear The Light. Hal ini dikarenakan return predicted rating yang tinggi untuk daftar tersebut. Kondisi ini menunjukkan bahwa sistem memperkirakan bahwa user tersebut akan memberi rating yang tinggi mengacu pada pola interaksi pengguna lain yang mirip. Sehingga sistem merekomendasikan buku berdasarkan user lain yang karakteristiknya mirip serta menyukai daftar buku tersebut.
 
 ## Evaluation
 
@@ -238,10 +253,18 @@ Pada Collaborative Filtering menggunakan RecommenderNet dan Algoritma Catboost, 
 
 =====Recommender Net====
 
-RMSE: 0.3749
+Avg Precision@5: 0.0000<br>
+Avg Recall@5: 0.0000<br>
+Avg F1-Score@5: 0.0000<br>
+Avg Hit Rate@5: 0.0000<br>
+RMSE: 0.3754
 
 =====CatBoost=====
 
+Avg Precision@5: 0.0000<br>
+Avg Recall@5: 0.0000<br>
+Avg F1-Score@5: 0.0000<br>
+Avg Hit Rate@5: 0.0000<br>
 RMSE: 0.3741
 
 Berdasarkan kedua jenis sistem rekomendasi yang dibangun, terlihat model masih belum cukup baik untuk memberikan rekomendasi pada user, namun sudah memiliki keterkaitan dengan konsep yang digunakan. Hal ini dapat dilihat pada Content Based Filtering, hasil return untuk input user pada judul atau author buku tertentu sesuai dengan hasil yang diharapkan. Kondisi yang membuat evaluasi kecil dapat terjadi karena terdapat kecenderungan data user yang membeli buku secara acak, bukan berdasarkan kesamaan karakteristiknya.
